@@ -1,0 +1,36 @@
+' PlantUML
+@startuml cd-overview
+
+title Overview of Continuous Deployment using GitDocumentDB
+!define ICONURL https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v2.2.0
+!includeurl ICONURL/common.puml
+!includeurl ICONURL/devicons/github_badge.puml
+!includeurl ICONURL/devicons/git.puml
+!includeurl ICONURL/font-awesome-5/cogs.puml
+!define SPRITESURL https://raw.githubusercontent.com/plantuml-stdlib/gilbarbara-plantuml-sprites/v1.0/sprites
+!includeurl SPRITESURL/gatsby.puml
+!includeurl SPRITESURL/netlify.puml
+!includeurl SPRITESURL/electron.puml
+
+node "<$electron>\nLocal App" {
+    database "GitDocumentDB" #f0f0ff;line:blue{
+    DEV_GIT(localrepos, Local Git repository, database) #f0f0ff;line:blue;line.dashed;{
+      collections "JSON files" as localjson #3030f0;text:white
+    }
+  }
+}
+
+DEV_GITHUB_BADGE(sourcerepos, GitHub, database) #fff0f0;line:red{
+  FA5_COGS(githubactions, GitHub actions, control) #ffffff  
+}
+
+node "<$netlify>Hosting" {
+  collections "Static website" as website
+  FA5_COGS(githubapps, "GitHubApps", control)
+}
+
+localrepos <--> sourcerepos : Synchronize\n(pull, resolve conflicts and push)
+githubapps -up-> sourcerepos : read
+githubapps <-- sourcerepos : hook
+
+@enduml

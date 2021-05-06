@@ -1,0 +1,26 @@
+{
+  "name": "sosuisen-mybox-gatsby",
+  "version": "1.0.0",
+  "private": true,
+  "description": "My Gatsby Site",
+  "author": "sosuisen",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "try-first": "git submodule update --init",
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "git submodule update --remote && gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "gatsby": "^2.32.3",
+    "gatsby-source-filesystem": "^2.11.0",
+    "gatsby-transformer-json": "^2.11.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-icons": "^4.2.0"
+  }
+}
