@@ -11,8 +11,8 @@
     "try-first": "git submodule update --init",
     "develop": "gatsby develop",
     "start": "gatsby develop",
-    "build": "gatsby build",
-    "build-with-submodule": "git submodule update --remote && gatsby build",
+    "build": "mkdir -p ~/.ssh && echo -e '${SSH_KEY//_/\\n}' > ~/.ssh/id_rsa && chmod og-rwx ~/.ssh/id_rsa && git submodule update --remote && gatsby build",
+    "build-local": "git submodule update --remote && gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean"
   },
