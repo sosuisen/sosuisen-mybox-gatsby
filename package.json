@@ -11,7 +11,8 @@
     "try-first": "git submodule update --init",
     "develop": "gatsby develop",
     "start": "gatsby develop",
-    "build": "git submodule update --remote && gatsby build",
+    "build": "bash netlify-setup.sh && git submodule update --remote && gatsby build",
+    "build-local": "git submodule update --remote && gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean"
   },
