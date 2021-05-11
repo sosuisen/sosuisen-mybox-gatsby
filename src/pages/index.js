@@ -11,49 +11,38 @@ import { GiCardboardBox } from "react-icons/gi";
 const IndexPage = () => {
   const dbResult = useStaticQuery(graphql`
   query {
-      allItemJson {
+      allJsonJson(sort: {order: ASC, fields: created_date}) {
         edges {
           node {
             _id
             name
+            box
             created_date
             modified_date
             takeout
           }
         }
       }
-      allBoxJson {
-        edges {
-          node {
-            _id
-            name
-            items
-          }
-        }
-      }
-      workJson {
-        _id
-        boxOrder
-        currentBox
-      }      
     }  
   `);
-  const itemHash = dbResult.allItemJson.edges.reduce((result, current) => {
+  const boxHash = {};
+  const itemHash = dbResult.allJsonJson.edges.reduce((result, current) => {
     result[current.node._id] = current.node;
+    if (!boxHash[current.node.box]) {
+      boxHash[current.node.box] = { _id: encodeURIComponent(current.node.box), name: current.node.box, items: [] };
+    }
+    boxHash[current.node.box].items.push(current.node._id);
+    
     return result;
   }, {});
-  const sortedItemEdges = [...dbResult.allItemJson.edges].sort((a, b) => {
+  const sortedItemEdges = [...dbResult.allJsonJson.edges].sort((a, b) => {
     if(a.node.modified_date > b.node.modified_date) return -1;
     if(a.node.modified_date < b.node.modified_date) return 1
     else return 0;
   });
   const lastModifiedDate = sortedItemEdges[0].node.modified_date;
 
-  const boxHash = dbResult.allBoxJson.edges.reduce((result, current) => {
-    result[current.node._id] = current.node;
-    return result;
-  }, {});
-  const orderedBoxes = dbResult.workJson.boxOrder.map(boxId => boxHash[boxId]);
+  const orderedBoxes = Object.keys(boxHash).sort().map(boxName => boxHash[boxName]);
 
   return (
     <main>
