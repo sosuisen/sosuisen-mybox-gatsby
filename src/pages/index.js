@@ -82,8 +82,8 @@ const IndexPage = () => {
           <div style={{float: 'left', marginRight:  '7px'}}><FcAbout style={{fontSize: '24px'}}/></div>
           <div style={{marginTop: '4px', float: 'left'}}>Powered by <a href='https://github.com/sosuisen/git-documentdb'>GitDocumentDB</a></div>
           <div style={{clear: 'both'}}>          
-          - Data source: <a href='https://github.com/sosuisen/sosuisen-my-inventory'>https://github.com/sosuisen/sosuisen-my-inventory</a><br />
-          - Site generator: <a href='https://github.com/sosuisen/sosuisen-my-inventory-gatsby'>https://github.com/sosuisen/sosuisen-my-inventory-gatsby</a>
+          - Data source: <a href='https://github.com/sosuisen/sosuisen-mybox'>https://github.com/sosuisen/sosuisen-mybox</a><br />
+          - Site generator: <a href='https://github.com/sosuisen/sosuisen-mybox-gatsby'>https://github.com/sosuisen/sosuisen-mybox-gatsby</a>
           </div>
         </div>        
       </div>
