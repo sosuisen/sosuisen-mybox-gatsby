@@ -7,8 +7,16 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: 'items',
-        path: `${__dirname}/src/json/`,
+        name: 'item',
+        path: `${__dirname}/src/json/item/`,
+      },
+    },
+    'gatsby-transformer-json',
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: 'box',
+        path: `${__dirname}/src/json/box/`,
       },
     },
   ],

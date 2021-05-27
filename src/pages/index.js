@@ -11,39 +11,57 @@ import { GiCardboardBox } from "react-icons/gi";
 const IndexPage = () => {
   const dbResult = useStaticQuery(graphql`
   query {
-      allJsonJson(sort: {order: ASC, fields: created_date}) {
-        edges {
-          node {
-            _id
-            name
-            box
-            created_date
-            modified_date
-            takeout
+    allBoxJson {
+      edges {
+        node {
+          name
+          _id
+        }
+      }
+    }
+    allFile(filter: {dir: {}, sourceInstanceName: {eq: "item"}}) {
+      edges {
+        node {
+          name
+          relativeDirectory
+          internal {
+            content
           }
         }
       }
-    }  
-  `);
-  const boxHash = {};
-  const itemHash = dbResult.allJsonJson.edges.reduce((result, current) => {
-    result[current.node._id] = current.node;
-    if (!boxHash[current.node.box]) {
-      boxHash[current.node.box] = { _id: encodeURIComponent(current.node.box), name: current.node.box, items: [] };
-    }
-    boxHash[current.node.box].items.push(current.node._id);
-    
+    }    
+  }  
+`);
+
+  const boxHash = dbResult.allBoxJson.edges.reduce((result, current) => {
+    const box = current.node;
+    box.items = [];
+    result[box._id] = box;
     return result;
   }, {});
-  const sortedItemEdges = [...dbResult.allJsonJson.edges].sort((a, b) => {
-    if(a.node.modified_date > b.node.modified_date) return -1;
-    if(a.node.modified_date < b.node.modified_date) return 1
-    else return 0;
+
+  const itemHash = dbResult.allFile.edges.reduce((result, current) => {
+    const item = JSON.parse(current.node.internal.content);
+    result[item._id] = item;
+    const boxId = current.node.relativeDirectory;
+    if (boxHash[boxId]) {
+      boxHash[boxId].items.push(item._id);
+    }
+    return result;
+  }, {});
+  
+  const sortedItem = Object.values(itemHash).sort((a, b) => {
+    if(a.modified_date < b.modified_date) return 1;
+    if(a.modified_date > b.modified_date) return -1
+    return 0;
   });
-  const lastModifiedDate = sortedItemEdges[0].node.modified_date;
+  const lastModifiedDate = sortedItem[0].modified_date;
 
-  const orderedBoxes = Object.keys(boxHash).sort().map(boxName => boxHash[boxName]);
-
+  const orderedBoxes = Object.values(boxHash).sort((a, b) => {
+    if(a.name > b.name) return 1;
+    if(a.name < b.name) return -1
+    return 0;
+  });
   return (
     <main>
       <title>疏水箱</title>
@@ -81,13 +99,13 @@ const IndexPage = () => {
         <div className={indexStyle.footnote}>
           <div style={{float: 'left', marginRight:  '7px'}}><FcAbout style={{fontSize: '24px'}}/></div>
           <div style={{marginTop: '4px', float: 'left'}}>Powered by <a href='https://github.com/sosuisen/git-documentdb'>GitDocumentDB</a></div>
-          <div style={{clear: 'both'}}>          
-          - Data source: <a href='https://github.com/sosuisen/sosuisen-my-inventory'>https://github.com/sosuisen/sosuisen-my-inventory</a><br />
-          - Site generator: <a href='https://github.com/sosuisen/sosuisen-my-inventory-gatsby'>https://github.com/sosuisen/sosuisen-my-inventory-gatsby</a>
+          <div style={{clear: 'both'}}>
+          - Data source: <a href='https://github.com/sosuisen/sosuisen-mybox'>https://github.com/sosuisen/sosuisen-mybox</a><br />
+          - Site generator: <a href='https://github.com/sosuisen/sosuisen-mybox-gatsby'>https://github.com/sosuisen/sosuisen-mybox-gatsby</a><br />
+          - App: <a href='https://github.com/sosuisen/inventory-manager'>https://github.com/sosuisen/inventory-manager</a><br />
           </div>
         </div>        
       </div>
-
     </main>
   )
 }
