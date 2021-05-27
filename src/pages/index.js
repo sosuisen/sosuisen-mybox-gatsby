@@ -51,8 +51,8 @@ const IndexPage = () => {
   }, {});
   
   const sortedItem = Object.values(itemHash).sort((a, b) => {
-    if(a.modified_date < b.modified_date) return 1;
-    if(a.modified_date > b.modified_date) return -1
+    if(a.created_date < b.created_date) return 1;
+    if(a.created_date > b.created_date) return -1
     return 0;
   });
   const lastModifiedDate = sortedItem[0].modified_date;
