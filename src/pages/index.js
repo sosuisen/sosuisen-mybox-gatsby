@@ -36,16 +36,20 @@ const IndexPage = () => {
   const boxHash = dbResult.allBoxJson.edges.reduce((result, current) => {
     const box = current.node;
     box.items = [];
-    result[box._id] = box;
+    const _id = box._id.replace(/^box\//,'');
+    box._id = _id;
+    result[_id] = box;
     return result;
   }, {});
 
   const itemHash = dbResult.allFile.edges.reduce((result, current) => {
     const item = JSON.parse(current.node.internal.content);
-    result[item._id] = item;
+    const _id = (item._id.split('/'))[2];
+    item._id = _id;
+    result[_id] = item;
     const boxId = current.node.relativeDirectory;
     if (boxHash[boxId]) {
-      boxHash[boxId].items.push(item._id);
+      boxHash[boxId].items.push(_id);
     }
     return result;
   }, {});
