@@ -102,9 +102,9 @@ const IndexPage = () => {
         <hr style={{width: '980px', marginLeft: '0px', marginTop: '24px', border: 'none', height: '2px', backgroundColor: '#c08070'}}/>        
         <div className={indexStyle.footnote}>
           <div style={{float: 'left', marginRight:  '7px'}}><FcAbout style={{fontSize: '24px'}}/></div>
-          <div style={{marginTop: '4px', float: 'left'}}>Powered by <a href='https://github.com/sosuisen/git-documentdb'>GitDocumentDB</a></div>
+          <div style={{marginTop: '4px', float: 'left'}}>Powered by <a href='https://gitddb.com/'>GitDocumentDB</a></div>
           <div style={{clear: 'both'}}>
-          - Data source: <a href='https://gitddb.com/'>https://gitddb.com/</a><br />
+          - Data source: <a href='https://github.com/sosuisen/sosuisen-mybox'>https://github.com/sosuisen/sosuisen-mybox</a><br />
           - Site generator: <a href='https://github.com/sosuisen/sosuisen-mybox-gatsby'>https://github.com/sosuisen/sosuisen-mybox-gatsby</a><br />
           - App: <a href='https://github.com/sosuisen/inventory-manager'>https://github.com/sosuisen/inventory-manager</a><br />
           </div>
